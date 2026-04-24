@@ -1,0 +1,55 @@
+Project: “Iron Dome for Flies” (Autonomous Insect Detection & Targeting System)
+Overview
+
+Build a real-time computer vision system that detects flying insects (flies) in an outdoor environment, tracks them using a motorized pan-tilt mechanism, and triggers a laser-based elimination system. The project is a hobby-level MVP combining AI vision, embedded systems, and hardware control.
+
+System Pipeline
+
+Camera → YOLO Detection → Target Selection → Servo Tracking → Laser Activation → Safety Control
+
+Milestones
+Milestone 1: Real-Time Fly Detection ($50)
+Run YOLOv8 (or similar model) on edge hardware (Jetson Nano or Raspberry Pi 4)
+Detect small insects/flies from live camera feed
+Achieve 15–20 FPS performance (target, not strict perfection)
+Deliverable: demo video showing live detection with bounding boxes
+
+Milestone 2: Pan-Tilt Tracking System ($80)
+Integrate PCA9685 servo controller
+Control 2-axis pan-tilt mechanism
+Convert detection output (bounding box centroid) into servo movement
+Achieve smooth real-time tracking of moving target
+Deliverable: demo video of system following a moving insect
+
+Milestone 3: Laser Targeting + Safety System ($70)
+Integrate TTL laser module controlled via GPIO
+Fire laser only when target is locked
+Implement safety constraints:
+no upward firing
+restricted firing zones
+basic interlock logic
+Outdoor test demonstration required
+
+Deliverable: full system demo video
+Hardware (provided by client)
+Jetson Nano or Raspberry Pi 4 (to be selected)
+USB camera
+PCA9685 servo driver
+2-axis pan-tilt mount
+MG996R servos
+TTL laser module (1–5W)
+External power supply for servos
+
+Software Stack
+Python
+YOLOv8 (Ultralytics)
+OpenCV
+GPIO control (Jetson.GPIO or equivalent)
+I2C control for PCA9685
+
+Key Requirements
+Real-time performance (15+ FPS target)
+Stable detection-to-tracking pipeline
+Low-latency servo response
+Safe laser control with software interlocks
+Modular, maintainable code structure
