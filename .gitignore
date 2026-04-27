@@ -20,3 +20,4 @@ var/
 
 dataset
 logs/
+runs/detect/tests
