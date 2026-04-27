@@ -1,0 +1,1 @@
+"""Laser triggering module."""

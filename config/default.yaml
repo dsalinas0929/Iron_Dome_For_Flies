@@ -1,0 +1,25 @@
+camera:
+  source: 0
+  width: 1280
+  height: 720
+  fps_target: 20
+
+detection:
+  model_path: yolov8n.pt
+  min_confidence: 0.6
+
+tracking:
+  smooth_factor: 0.2
+  lock_frames_required: 3
+
+safety:
+  pan_min: 10
+  pan_max: 170
+  tilt_min: 5
+  tilt_max: 70
+  min_confidence_to_fire: 0.6
+
+laser:
+  gpio_pin: 18
+  enabled: false
+

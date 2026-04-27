@@ -101,3 +101,7 @@ As implementation begins, organize code by responsibility:
 - Disable firing if detection confidence or lock stability drops.
 - Keep an emergency stop path (software and physical kill switch).
 - Never run outdoor tests without controlled backstop and exclusion zone.
+
+## Current Repository Status
+
+Initial project scaffold is in place with module folders for `app`, `vision`, `tracking`, `control`, `laser`, `safety`, `tests`, and `config`.
