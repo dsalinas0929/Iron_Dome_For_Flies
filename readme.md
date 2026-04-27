@@ -105,3 +105,18 @@ As implementation begins, organize code by responsibility:
 ## Current Repository Status
 
 Initial project scaffold is in place with module folders for `app`, `vision`, `tracking`, `control`, `laser`, `safety`, `tests`, and `config`.
+
+## Quick Test with Static Images
+
+Run your trained YOLO model (`best.pt`) against a single image or an image folder:
+
+```bash
+python3 app/test_static_images.py --source /path/to/images_or_image
+```
+
+Optional arguments:
+
+- `--model` (default: `runs/detect/train/weights/best.pt`)
+- `--output` (default: `runs/detect/static_test`)
+- `--conf` (default: `0.25`)
+- `--imgsz` (default: `640`)
