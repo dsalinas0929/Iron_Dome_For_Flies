@@ -111,7 +111,7 @@ Initial project scaffold is in place with module folders for `app`, `vision`, `t
 Run your trained YOLO model (`best.pt`) against a single image or an image folder:
 
 ```bash
-python3 app/test_static_images.py --source /path/to/images_or_image
+python3 tests/test_static_images.py --source /path/to/images_or_image
 ```
 
 Optional arguments:
@@ -120,3 +120,22 @@ Optional arguments:
 - `--output` (default: `runs/detect/static_test`)
 - `--conf` (default: `0.25`)
 - `--imgsz` (default: `640`)
+
+## Quick Test with Live Camera or RTSP
+
+Webcam (device 0):
+
+```bash
+python3 tests/test_live_stream.py --source 0
+```
+
+RTSP stream:
+
+```bash
+python3 tests/test_live_stream.py --source "rtsp://username:password@ip:554/stream"
+```
+
+Notes:
+
+- Press `q` to stop the live window.
+- Optional arguments: `--model`, `--conf`, `--imgsz`

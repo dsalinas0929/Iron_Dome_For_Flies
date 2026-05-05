@@ -18,6 +18,6 @@ sdist/
 var/
 *.egg-info
 
-dataset
+dataset/
 logs/
-runs/detect/tests
+runs/
