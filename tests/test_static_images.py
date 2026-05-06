@@ -12,7 +12,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Test trained YOLOv8 model with static images.")
     parser.add_argument(
         "--model",
-        default="runs/detect/train-2/weights/best.pt",
+        default="runs/detect/train-5/weights/best.pt",
         help="Path to trained model weights (.pt).",
     )
     parser.add_argument(
