@@ -21,3 +21,5 @@ var/
 dataset/
 logs/
 runs/
+result/
+models/

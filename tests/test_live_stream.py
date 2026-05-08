@@ -14,7 +14,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Test trained YOLOv8 model with live camera or RTSP stream.")
     parser.add_argument(
         "--model",
-        default="runs/detect/train/weights/best.pt",
+        default="best.pt",
         help="Path to trained model weights (.pt).",
     )
     parser.add_argument(
@@ -59,6 +59,7 @@ def run_live_inference(model_path: Path, source: str, conf: float, imgsz: int) -
                 break
 
             results = model.predict(frame, conf=conf, imgsz=imgsz, verbose=False)
+                    
             annotated = results[0].plot()
 
             now = time.time()
