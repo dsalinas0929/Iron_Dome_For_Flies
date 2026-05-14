@@ -1,0 +1,23 @@
+{
+  "detection": {
+    "conf": 0.25,
+    "imgsz": 640,
+    "target_class_id": null
+  },
+  "tracking": {
+    "pan_min_deg": 10.0,
+    "pan_max_deg": 170.0,
+    "tilt_min_deg": 5.0,
+    "tilt_max_deg": 70.0,
+    "smoothing_alpha": 0.25,
+    "prediction_horizon_sec": 0.12,
+    "invert_pan": false,
+    "invert_tilt": false
+  },
+  "kalman": {
+    "process_var": 0.02,
+    "measurement_var": 0.005,
+    "initial_position_var": 1.0,
+    "initial_velocity_var": 1.0
+  }
+}

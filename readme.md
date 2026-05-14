@@ -139,3 +139,32 @@ Notes:
 
 - Press `q` to stop the live window.
 - Optional arguments: `--model`, `--conf`, `--imgsz`
+
+## M2 Software-Only Tracking Validation
+
+Use this to validate M2 on your side before real PCA9685 control:
+
+`detection -> Kalman prediction -> simulated pan/tilt angle output`
+
+Run with camera/RTSP/video source:
+
+```bash
+python3 diagnostics/m2_servo_tracking_preview.py \
+  --source "rtsp://username:password@ip:554/stream" \
+  --model models/best_v2_com.pt \
+  --config config/m2_tracking_config.json \
+  --save-video result/m2_tracking_preview.mp4
+```
+
+Config fields exposed in [`config/m2_tracking_config.json`](config/m2_tracking_config.json):
+
+- servo limits: `pan_min_deg`, `pan_max_deg`, `tilt_min_deg`, `tilt_max_deg`
+- smoothing: `smoothing_alpha`
+- prediction horizon: `prediction_horizon_sec`
+- Kalman params: `process_var`, `measurement_var`, `initial_position_var`, `initial_velocity_var`
+
+Useful runtime options:
+
+- `--backend` (`default`, `ffmpeg`, `gstreamer`)
+- `--no-display` (headless run)
+- `--max-frames`, `--print-every`

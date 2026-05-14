@@ -9,7 +9,7 @@ detection:
   min_confidence: 0.6
 
 tracking:
-  smooth_factor: 0.2
+  smooth_factor: 0.5
   lock_frames_required: 3
 
 safety:
