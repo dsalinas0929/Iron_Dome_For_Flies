@@ -48,8 +48,13 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--save-video",
-        default="",
-        help="Optional output video path (e.g. result/m2_tracking_preview.mp4).",
+        nargs="?",
+        const="result/m2_tracking_preview.mp4",
+        default=None,
+        help=(
+            "Save preview as MP4. Optionally pass output path. "
+            "Examples: `--save-video` or `--save-video result/my_preview.mp4`"
+        ),
     )
     parser.add_argument(
         "--max-frames",
@@ -187,8 +192,8 @@ def draw_overlay(
     return out
 
 
-def build_video_writer(path: str, width: int, height: int, fps: float) -> cv2.VideoWriter:
-    output_path = Path(path)
+def build_video_writer(path: Path, width: int, height: int, fps: float) -> cv2.VideoWriter:
+    output_path = path
     output_path.parent.mkdir(parents=True, exist_ok=True)
     safe_fps = fps if fps > 1.0 else 20.0
     return cv2.VideoWriter(
@@ -197,6 +202,15 @@ def build_video_writer(path: str, width: int, height: int, fps: float) -> cv2.Vi
         safe_fps,
         (width, height),
     )
+
+
+def normalize_mp4_path(raw_path: str | None) -> Path | None:
+    if raw_path is None:
+        return None
+    path = Path(raw_path)
+    if path.suffix.lower() != ".mp4":
+        path = path.with_suffix(".mp4")
+    return path
 
 
 def run() -> None:
@@ -253,10 +267,12 @@ def run() -> None:
     source_fps = float(cap.get(cv2.CAP_PROP_FPS) or 0.0)
 
     writer = None
-    if args.save_video:
-        writer = build_video_writer(args.save_video, width, height, source_fps)
+    save_path = normalize_mp4_path(args.save_video)
+    if save_path is not None:
+        writer = build_video_writer(save_path, width, height, source_fps)
         if not writer.isOpened():
-            raise RuntimeError(f"Unable to open video writer: {args.save_video}")
+            raise RuntimeError(f"Unable to open video writer: {save_path}")
+        print(f"Saving preview video to: {save_path}")
 
     window_name = "M2 Servo Tracking Preview"
     frame_idx = 0
@@ -316,6 +332,7 @@ def run() -> None:
         pan_tilt.close()
         if writer is not None:
             writer.release()
+            print(f"Saved preview video: {save_path} (frames={frame_idx})")
         if display:
             cv2.destroyAllWindows()
 

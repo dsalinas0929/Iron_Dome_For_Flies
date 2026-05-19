@@ -156,6 +156,15 @@ python3 diagnostics/m2_servo_tracking_preview.py \
   --save-video result/m2_tracking_preview.mp4
 ```
 
+Quick default save (auto path):
+
+```bash
+python3 diagnostics/m2_servo_tracking_preview.py \
+  --source 0 \
+  --model models/best_v2_com.pt \
+  --save-video
+```
+
 Config fields exposed in [`config/m2_tracking_config.json`](config/m2_tracking_config.json):
 
 - servo limits: `pan_min_deg`, `pan_max_deg`, `tilt_min_deg`, `tilt_max_deg`

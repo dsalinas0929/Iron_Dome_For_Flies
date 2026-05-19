@@ -2,5 +2,6 @@ ultralytics
 opencv-python
 numpy
 onnx
+onnxsim
 onnxruntime
 smbus2
