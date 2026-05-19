@@ -3,3 +3,4 @@ opencv-python
 numpy
 onnx
 onnxruntime
+smbus2

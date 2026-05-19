@@ -162,9 +162,52 @@ Config fields exposed in [`config/m2_tracking_config.json`](config/m2_tracking_c
 - smoothing: `smoothing_alpha`
 - prediction horizon: `prediction_horizon_sec`
 - Kalman params: `process_var`, `measurement_var`, `initial_position_var`, `initial_velocity_var`
+- hardware output (PCA9685): `servo_output.*` (`enabled`, `driver`, `i2c_*`, channels, pulse range, deadband)
 
 Useful runtime options:
 
 - `--backend` (`default`, `ffmpeg`, `gstreamer`)
 - `--no-display` (headless run)
 - `--max-frames`, `--print-every`
+- `--servo-enable` / `--servo-disable` to override config at runtime
+
+Client-side Jetson hardware run example:
+
+```bash
+python3 diagnostics/m2_servo_tracking_preview.py \
+  --source 0 \
+  --model models/best_v2_com.pt \
+  --config config/m2_tracking_config.json \
+  --backend default \
+  --servo-enable
+```
+
+```bash
+python3 diagnostics/m2_servo_tracking_preview.py \
+  --source "rtsp://127.0.0.1:8554/mystream" \
+  --model models/best_v2_com.pt \
+  --config config/m2_tracking_config.json
+```
+
+Notes:
+
+- Default is safe/off (`"servo_output.enabled": false`).
+- For real hardware control via PCA9685, install dependency: `pip install smbus2`.
+
+## Servo Sweep Diagnostic
+
+Before running full tracking with hardware, verify servo direction/range quickly:
+
+```bash
+python3 diagnostics/servo_sweep.py \
+  --config config/m2_tracking_config.json \
+  --servo-enable \
+  --mode both \
+  --cycles 1
+```
+
+Useful options:
+
+- `--driver mock` (safe dry-run without hardware)
+- `--step-deg`, `--step-delay-sec`, `--hold-sec`
+- `--mode pan|tilt|both`

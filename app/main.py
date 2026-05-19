@@ -17,20 +17,22 @@ def run() -> None:
     interlocks = SafetyInterlocks()
     laser = LaserController()
 
-    for detection in detector.stream():
-        if detection is None:
-            laser.disable()
-            continue
+    try:
+        for detection in detector.stream():
+            if detection is None:
+                laser.disable()
+                continue
 
-        pan_angle, tilt_angle = tracker.compute_angles(detection)
-        pan_tilt.move_to(pan_angle, tilt_angle)
+            pan_angle, tilt_angle = tracker.compute_angles(detection)
+            pan_tilt.move_to(pan_angle, tilt_angle)
 
-        if interlocks.can_fire(detection, pan_angle, tilt_angle):
-            laser.enable()
-        else:
-            laser.disable()
+            if interlocks.can_fire(detection, pan_angle, tilt_angle):
+                laser.enable()
+            else:
+                laser.disable()
+    finally:
+        pan_tilt.close()
 
 
 if __name__ == "__main__":
     run()
-
