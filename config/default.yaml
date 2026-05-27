@@ -34,12 +34,24 @@ servo:
   startup_center: false
 
 safety:
-  pan_min: 10
-  pan_max: 170
-  tilt_min: 5
-  tilt_max: 70
-  min_confidence_to_fire: 0.6
+  min_confidence: 0.6
+  lock_required_frames: 3
+  max_prediction_only_frames: 2
+  pan_min: 10.0
+  pan_max: 170.0
+  tilt_min: 5.0
+  tilt_max: 70.0
+  no_upward_tilt_min: 10.0
+  restricted_zones: []
 
 laser:
   gpio_pin: 18
   enabled: false
+  driver: mock
+  gpio_mode: BCM
+  active_high: true
+  fire_mode: pulse
+  pulse_on_ms: 80.0
+  cooldown_ms: 120.0
+  fail_safe_max_on_ms: 300.0
+  cleanup_on_close: true

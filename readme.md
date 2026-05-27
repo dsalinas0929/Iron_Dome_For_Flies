@@ -220,3 +220,45 @@ Useful options:
 - `--driver mock` (safe dry-run without hardware)
 - `--step-deg`, `--step-delay-sec`, `--hold-sec`
 - `--mode pan|tilt|both`
+
+## M3 Laser + Safety Validation
+
+Run end-to-end M3 logic with interlocks and laser gate decision overlay:
+
+```bash
+python3 diagnostics/m3_laser_safety_preview.py \
+  --source "rtsp://username:password@ip:554/stream" \
+  --model models/best_v2_com.pt \
+  --config config/m2_tracking_config.json \
+  --save-video result/m3_laser_safety_preview.mp4
+```
+
+Safe local run (no hardware output):
+
+```bash
+python3 diagnostics/m3_laser_safety_preview.py \
+  --source 0 \
+  --config config/m2_tracking_config.json \
+  --servo-disable \
+  --laser-disable
+```
+
+Jetson hardware run:
+
+```bash
+python3 diagnostics/m3_laser_safety_preview.py \
+  --source 0 \
+  --config config/m2_tracking_config.json \
+  --servo-enable \
+  --laser-enable
+```
+
+M3 config sections in `config/m2_tracking_config.json`:
+
+- `safety.*`: confidence threshold, lock frames, no-upward tilt rule, restricted zones
+- `laser_output.*`: driver, GPIO pin/mode, active level, pulse/cooldown/failsafe
+
+Notes:
+
+- Keep `"laser_output.enabled": false` by default until final hardware checks.
+- For Jetson GPIO output, install `Jetson.GPIO` on the target device and verify GPIO permissions.

@@ -6,7 +6,7 @@ from control.pan_tilt import PanTiltController
 from laser.controller import LaserController
 from safety.interlocks import SafetyInterlocks
 from tracking.controller import TargetTracker
-from vision.detector import Detection, FlyDetector
+from vision.detector import FlyDetector
 
 
 def run() -> None:
@@ -20,18 +20,23 @@ def run() -> None:
     try:
         for detection in detector.stream():
             if detection is None:
-                laser.disable()
+                laser.update(False)
                 continue
 
             pan_angle, tilt_angle = tracker.compute_angles(detection)
             pan_tilt.move_to(pan_angle, tilt_angle)
 
-            if interlocks.can_fire(detection, pan_angle, tilt_angle):
-                laser.enable()
-            else:
-                laser.disable()
+            decision = interlocks.evaluate(
+                detection_confidence=detection.confidence,
+                pan_angle=pan_angle,
+                tilt_angle=tilt_angle,
+                target_xy=(detection.centroid_x, detection.centroid_y),
+                prediction_only=False,
+            )
+            laser.update(decision.allow_fire)
     finally:
         pan_tilt.close()
+        laser.close()
 
 
 if __name__ == "__main__":
