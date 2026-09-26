@@ -5,3 +5,4 @@ onnx
 onnxsim
 onnxruntime
 smbus2
+# Jetson.GPIO
